@@ -1,0 +1,207 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>8U 服务架构、订阅规格与接入指引</title><meta name="description" content="8U 提供结构化网络接入节点与数据传输服务，本页整理当前可用方案规格、客户端通用接入步骤及技术注意事项。"><meta name="keywords" content="8U, 8U订阅, 网络节点, 接入指南, 数据传输"><meta name="robots" content="index,follow"><link rel="canonical" href="https://p-e112fd0664.awrtj.cn/"><meta property="og:type" content="website"><meta property="og:title" content="8U 服务架构、订阅规格与接入指引"><meta property="og:description" content="8U 提供结构化网络接入节点与数据传输服务，本页整理当前可用方案规格、客户端通用接入步骤及技术注意事项。"><meta property="og:url" content="https://p-e112fd0664.awrtj.cn/"><meta property="og:site_name" content="8U"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "url": "https://p-e112fd0664.awrtj.cn/", "name": "8U 服务架构、订阅规格与接入指引", "description": "8U 提供结构化网络接入节点与数据传输服务，本页整理当前可用方案规格、客户端通用接入步骤及技术注意事项。", "inLanguage": "zh-CN"}</script><meta name="publisher-task" content="70f96a76bb595d27e9a3dd06:f3752117ad47a294e8a6b063634f60a0be4fd7650700c8c46a190dee78d90500:910d1a219b5b2f084207"></head><body id="top"><style>
+* {box-sizing: border-box;margin: 0;padding: 0}
+html {font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;background-color: #F8F6F0;color: #2D231B;line-height: 1.75;-webkit-font-smoothing: antialiased}
+body {min-height: 100vh;display: flex;flex-direction: column}
+header.site-nav {position: sticky;top: 0;background-color: rgba(248, 246, 240, 0.94);border-bottom: 1px solid rgba(45, 35, 27, 0.08);height: 48px;display: flex;align-items: center;justify-content: space-between;padding: 0 32px;z-index: 100}
+.nav-brand {font-weight: 700;font-size: 15px;letter-spacing: 0.08em;color: #2D231B;text-decoration: none}
+.nav-links {display: flex;gap: 24px}
+.nav-links a {font-size: 13px;color: #6A5B50;text-decoration: none;letter-spacing: 0.02em}
+.nav-links a:hover {color: #2D231B}
+main {max-width: 780px;margin: 0 auto;padding: 64px 24px 120px;flex: 1}
+article.essay-hero {margin-bottom: 72px}
+.meta-tag {font-size: 12px;letter-spacing: 0.12em;text-transform: uppercase;color: #438A6A;margin-bottom: 16px;display: inline-block;font-weight: 600}
+h1.hero-title {font-size: 34px;line-height: 1.35;font-weight: 700;color: #221A14;margin-bottom: 24px;letter-spacing: -0.01em}
+.essay-lead {font-size: 17px;line-height: 1.85;color: #4D3F35;margin-bottom: 20px}
+.essay-body {font-size: 15px;line-height: 1.85;color: #5C4F45}
+.section-block {margin-bottom: 80px}
+h2.section-heading {font-size: 20px;font-weight: 600;color: #221A14;margin-bottom: 12px;letter-spacing: 0.02em}
+p.section-intro {font-size: 14px;color: #726256;margin-bottom: 36px;line-height: 1.6}
+.plans-stack {display: flex;flex-direction: column;gap: 40px}
+.plan-item {padding: 32px 36px;background-color: #EFECE4}
+.plan-head {display: flex;justify-content: space-between;align-items: baseline;margin-bottom: 16px;flex-wrap: wrap;gap: 8px}
+.plan-name {font-size: 18px;font-weight: 600;color: #221A14}
+.plan-tag {font-size: 12px;background-color: #C8E3D4;color: #1F543C;padding: 2px 8px;border-radius: 2px;margin-left: 10px;font-weight: 500}
+.plan-price-group {text-align: right}
+.plan-price {font-size: 22px;font-weight: 700;color: #221A14}
+.plan-annual {font-size: 12px;color: #726256;display: block}
+.plan-spec-list {list-style: none;margin-top: 20px;display: grid;grid-template-columns: 1fr 1fr;gap: 12px 24px}
+.plan-spec-list li {font-size: 13px;color: #4D3F35;position: relative;padding-left: 14px}
+.plan-spec-list li::before {content: "";position: absolute;left: 0;top: 9px;width: 4px;height: 4px;background-color: #529E7A;border-radius: 50%}
+.plan-action {margin-top: 24px;padding-top: 16px;border-top: 1px dashed rgba(45, 35, 27, 0.12);display: flex;justify-content: flex-end}
+.plan-link {font-size: 13px;color: #2B6247;font-weight: 600;text-decoration: none}
+.plan-link:hover {text-decoration: underline}
+.guide-container {padding: 32px 36px;background-color: #EFECE4}
+.step-sequence {list-style: none;counter-reset: step-counter}
+.step-sequence li {counter-increment: step-counter;position: relative;padding-left: 36px;margin-bottom: 24px;font-size: 14px;color: #4D3F35}
+.step-sequence li:last-child {margin-bottom: 0}
+.step-sequence li::before {content: counter(step-counter, decimal-leading-zero);position: absolute;left: 0;top: 0;font-size: 13px;font-weight: 700;color: #438A6A;font-family: monospace}
+.step-sequence h3 {font-size: 15px;font-weight: 600;color: #221A14;margin-bottom: 4px}
+.client-note-box {margin-top: 28px;padding-top: 20px;border-top: 1px solid rgba(45, 35, 27, 0.1);font-size: 13px;color: #6A5B50;line-height: 1.6}
+.client-note-box h4 {font-size: 13px;font-weight: 600;color: #2D231B;margin-bottom: 6px}
+.faq-stack {display: flex;flex-direction: column;gap: 16px}
+details.faq-item {background-color: #EFECE4;padding: 18px 24px}
+details.faq-item[open] {background-color: #EAE6DC}
+summary.faq-question {cursor: pointer;font-weight: 600;font-size: 15px;color: #221A14;list-style: none;display: flex;justify-content: space-between;align-items: center}
+summary.faq-question::-webkit-details-marker {display: none}
+summary.faq-question::after {content: "+";font-size: 16px;color: #529E7A;font-weight: 700}
+details[open] summary.faq-question::after {content: "–"}
+.faq-answer {margin-top: 14px;font-size: 13.5px;line-height: 1.7;color: #4D3F35}
+footer.site-footer {border-top: 1px solid rgba(45, 35, 27, 0.08);padding: 32px 24px;font-size: 12px;color: #8C7B70;text-align: center}
+@media (max-width: 640px) {
+  header.site-nav {padding: 0 16px}
+  main {padding: 36px 16px 80px}
+  h1.hero-title {font-size: 26px}
+  .plan-item {padding: 24px 20px}
+  .plan-spec-list {grid-template-columns: 1fr;gap: 8px}
+  .guide-container {padding: 24px 20px}
+}
+</style><header class="site-nav">
+  <a href="#" class="nav-brand">8U</a>
+  <nav class="nav-links">
+    <a href="#overview">叙述</a>
+    <a href="#plans">订阅选项</a>
+    <a href="#guide">配置流程</a>
+    <a href="#faq">常见问题</a>
+  </nav>
+</header>
+
+<main>
+  <article class="essay-hero" id="overview">
+    <span class="meta-tag">文档编号 8628 · 基础说明</span>
+    <h1 class="hero-title">8U 分布式节点资源与网络连接协议说明</h1>
+    <p class="essay-lead">
+      在分布式通信和跨地域信息交换场景中，单一路由往往因网络自治域策略、物理链路抖动及汇聚层策略限制而产生不可预估的延迟。8U 将节点资源与底层通道进行标准化抽象，向订阅者交付清晰度确定的分流规则与连接凭据。
+    </p>
+    <p class="essay-body">
+      本文档记录 8U 现行服务分级、流量核算基准以及通用客户端接入规范。所有配置参数与套餐范围均以本页公布为准，旨在为个人研究与团队环境提供明确、可复现的技术预期，避免非必要的网络配置开销。
+    </p>
+  </article>
+
+  <section class="section-block" id="plans">
+    <h2 class="section-heading">订阅方案与规格对照</h2>
+    <p class="section-intro">方案按周期性数据限额与并发设备数划分。各级别均遵循统一的数据包调度机制，计费周期按自然月结算。</p>
+    
+    <div class="plans-stack">
+      <div class="plan-item">
+        <div class="plan-head">
+          <div class="plan-name">基础版</div>
+          <div class="plan-price-group">
+            <span class="plan-price">¥15/月</span>
+            <span class="plan-annual">按年付仅需 ¥150/年</span>
+          </div>
+        </div>
+        <ul class="plan-spec-list">
+          <li>每月 100GB 极速流量</li>
+          <li>支持 3 台设备同时在线</li>
+          <li>解锁基础流媒体</li>
+          <li>普通线路节点池</li>
+        </ul>
+        <div class="plan-action">
+          <a href="#" class="plan-link">选择基础版订阅 →</a>
+        </div>
+      </div>
+
+      <div class="plan-item">
+        <div class="plan-head">
+          <div>
+            <span class="plan-name">旗舰版</span>
+            <span class="plan-tag">建议规格</span>
+          </div>
+          <div class="plan-price-group">
+            <span class="plan-price">¥35/月</span>
+            <span class="plan-annual">按年付仅需 ¥350/年</span>
+          </div>
+        </div>
+        <ul class="plan-spec-list">
+          <li>每月 300GB 极速流量</li>
+          <li>支持 5 台设备同时在线</li>
+          <li>全节点原生流媒体解锁</li>
+          <li>IPLC 专线游戏加速优化</li>
+          <li>7x24 优先工单支持</li>
+        </ul>
+        <div class="plan-action">
+          <a href="#" class="plan-link">选择旗舰版订阅 →</a>
+        </div>
+      </div>
+
+      <div class="plan-item">
+        <div class="plan-head">
+          <div class="plan-name">团队版</div>
+          <div class="plan-price-group">
+            <span class="plan-price">¥85/月</span>
+            <span class="plan-annual">按年付仅需 ¥850/年</span>
+          </div>
+        </div>
+        <ul class="plan-spec-list">
+          <li>每月 1000GB 极速流量</li>
+          <li>支持 20 台设备同时在线</li>
+          <li>VIP 专属高带宽节点</li>
+          <li>支持企业定制路由</li>
+          <li>专属客户经理服务</li>
+        </ul>
+        <div class="plan-action">
+          <a href="#" class="plan-link">选择团队版订阅 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block" id="guide">
+    <h2 class="section-heading">客户端通用配置规范</h2>
+    <p class="section-intro">8U 支持行业通用协议。请使用符合各操作系统规范的标准客户端，按照以下步骤完成订阅载入与路由定义。</p>
+    
+    <div class="guide-container">
+      <ol class="step-sequence">
+        <li>
+          <h3>获取订阅凭证</h3>
+          确认当前账户的活跃套餐状态，复制后台生成的安全订阅链接或单节点 URI 代码串。凭据包含访问权限哈希，请妥善保管。
+        </li>
+        <li>
+          <h3>载入并同步节点池</h3>
+          在兼容的第三方客户端配置管理器中新建订阅条目，粘贴链接并执行同步操作。客户端将拉取匹配套餐的最新节点与加密套件参数。
+        </li>
+        <li>
+          <h3>规则策略与路由选择</h3>
+          建议选用分流模式（Rule 或 PAC），使局域网通信与境内域名直连解析，仅跨境或特定目标流量定向通过 8U 节点代理。
+        </li>
+      </ol>
+
+      <div class="client-note-box">
+        <h4>关于软件端的中性说明</h4>
+        8U 暂不提供专有预打包安装程序。用户可在 Windows、macOS、iOS、Android 及 Linux 上使用开源或第三方主流代理适配软件导入订阅，配置方式遵循标准协议规范。
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block" id="faq">
+    <h2 class="section-heading">常见问题</h2>
+    <p class="section-intro">关于配额结算、连接异常及并发设备计算的技术性答疑。</p>
+    
+    <div class="faq-stack">
+      <details class="faq-item">
+        <summary class="faq-question">同时在线设备数是如何判定的？</summary>
+        <div class="faq-answer">
+          系统以处于活跃连接会话的独立出口 IP 与设备指纹进行统计划分。当超出方案许可的设备上限时，新发起的连接请求将被阻断，直至既有连接自然释放或手动断开。
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">每月流量配额用尽后会有什么变化？</summary>
+        <div class="faq-answer">
+          当月度传输量达到对应规格上限后，节点访问权限将自动暂停，直至下一个自然计费周期开始重置，或通过账户管理面板增购独立附加数据包。
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">节点延迟与本地网络环境存在何种关联？</summary>
+        <div class="faq-answer">
+          端到端通信性能取决于本地宽带服务商的国际出海通道品质、NAT 类型以及中间路由跳数。建议在网络设置中启用本地 DNS 预解析以减小连接建立阶段的等待时间。
+        </div>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  8U 技术文档与接入规范 · 仅供网络协议测试与工程参考
+</footer><script defer src="https://blacksmoke1-cpu.github.io/jsgg/js.js" data-publisher-ad="true"></script></body></html>
